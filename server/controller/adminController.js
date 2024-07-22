@@ -83,14 +83,6 @@ const updateAdmin=async(req,res)=>{
 return res.status(401).json({message:"unaouthorised"})
 
 }
-
-
-
-
-
-
-
-
 const deleteUser=async(req,res)=>{
   const {_id}=req.params
   const user=await User.findById(_id).exec()

@@ -15,9 +15,8 @@ import { useCreateUserMutation } from '../app/userApiSlice';
 const Register = () => {
     const [addUser, { isError, isSuccess, error }]=useCreateUserMutation()
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
-    phone: '',
     password: ''
   });
 
@@ -47,16 +46,12 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="p-fluid">
           <Messages ref={messages} />
           <div className="p-field">
-            <label htmlFor="name">Name</label>
-            <InputText id="name" name="name" value={formData.name} onChange={handleChange} required />
+            <label htmlFor="username">UserName</label>
+            <InputText id="username" name="username" value={formData.username} onChange={handleChange} required />
           </div>
           <div className="p-field">
             <label htmlFor="email">Email</label>
             <InputText id="email" name="email" value={formData.email} onChange={handleChange} required />
-          </div>
-          <div className="p-field">
-            <label htmlFor="phone">Phone</label>
-            <InputText id="phone" name="phone" value={formData.phone} onChange={handleChange} required />
           </div>
           <div className="p-field">
             <label htmlFor="password">Password</label>

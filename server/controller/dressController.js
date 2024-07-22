@@ -1,12 +1,12 @@
 const Dress = require('../models/Dress');
 const createDress=async(req,res)=>{
-  const {name,description,sizes,price,images,quantity,rented} = req.body
+  const {name,description,sizes,price,quantity,rented} = req.body
   if (!name || !sizes ||!price || !quantity) {
       return res.status(400).json({message:'required field is missing'})
       }
-     
   
-  const dress = await Dress.create({name,description,sizes,price,images,quantity,rented})
+  const imageUrl = req.file.path;
+  const dress = await Dress.create({name,description,sizes,price,images:imageUrl,quantity,rented})
   if(dress){
      return res.status(201).json({success:true,
           message:`dress ${dress.name} created successfuly`,
