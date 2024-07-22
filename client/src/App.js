@@ -6,7 +6,7 @@ import Catalog from './components/Catalog';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Register from './components/Register';
-
+import DressComponent from "./components/DressComponent"
 
 function App() {
 
@@ -18,6 +18,8 @@ function App() {
         <Routes>
           <Route path='/register' element={<Register />} />
           <Route path='/catalog' element={<Catalog />} />
+          <Route path='/dressComponent' element={<DressComponent />} />
+
         </Routes>
       </BrowserRouter>
     </Provider>
