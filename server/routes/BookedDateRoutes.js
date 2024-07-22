@@ -6,8 +6,8 @@ const verifyJWT = require("../middleware/verifyJWT")
 router.use(verifyJWT)
 router.get("/", BookedDate.getBookedDates)
 router.post("/", BookedDate.createBookedDate)
-router.put("/:id", BookedDate.updateBookedDate)
-router.delete("/:id", BookedDate.deleteBookedDate)
-router.get("/:id", BookedDate.getBookedDateById)
+router.put("/:_id", BookedDate.updateBookedDate)
+router.delete("/:_id", BookedDate.deleteBookedDate)
+router.get("/:_id", BookedDate.getBookedDateById)
 
 module.exports = router

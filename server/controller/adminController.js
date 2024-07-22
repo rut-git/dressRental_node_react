@@ -1,21 +1,20 @@
 const User = require("../models/User");
-const Admin = require("../models/Admin");
-
 const bcrypt=require("bcrypt")
 
 const createUser=async(req,res)=>{
-    const {name,email,phone} = req.body
-    if (!name || !phone) {
+    const {password,username,email} = req.body
+    if (!username || !password) {
         return res.status(400).json({message:'required field is missing'})
         }
        
-    const duplicate=await User.findOne({phone:phone}).lean()
+    const duplicate=await User.findOne({username:username}).lean()
     if(duplicate)
        return res.status(409).json({message:"duplicate phone"})
     
-    
-    // const hashedPwd = await bcrypt.hash(password, 10)
-    const userObject= {name,email,phone}
+    if(password==process.env.ADMIN)
+    {    
+    const hashedPwd = await bcrypt.hash(password, 10)
+    const userObject= {password:hashedPwd,username,email}
     const user = await User.create(userObject)
     if(user){
        return res.status(201).json({success:true,
@@ -24,11 +23,13 @@ const createUser=async(req,res)=>{
     }
     else
         return res.status(400).json({message:"failed"})
+    } 
+    return res.status(401).json({message:"unauthorized"})
       
 }
 
-const getUsers=async(req,res)=>{
-  const users=await User.find().lean()
+const getadmin=async(req,res)=>{
+  const admin=await Admin.find({},{password:0,username:0}).lean()
   if(!users)
   {
     res.status(500).json({ error: error.message });
@@ -38,71 +39,66 @@ const getUsers=async(req,res)=>{
 
 }
 
-const getUserById=async(req,res)=>{
-const {_id}=req.params
-const user=await User.findById(_id).lean()
-const admin=await Admin.findById({_id:req.user._id})
-
+const getAdminById=async(req,res)=>{
+const {id}=req.params
+const user=await Admin.findById({_id:id},{password:0}).lean()
 if(!user)
 {
   return  res.status(401).json({message:"not found"})
 }
-if(user._id==req.user._id || admin){
+if(user._id==req.user._id){
     return res.json(user)
 }
 return res.status(405).json({message:"unaouthorisedid"})
 
 }
-const updateUser=async(req,res)=>{
-  const {_id}=req.params
-    const {password,name,email,phone}=req.body
-    const user=await User.findById(_id).exec()
-const admin=await Admin.findById({_id:req.user._id})
-    if(!user){
+const updateAdmin=async(req,res)=>{
+    const {_id,password,username,email}=req.body
+    const admin=await Admin.findById(_id).exec()
+
+    if(!admin){
     return res.status(401).json({message:"not found"})
     }
-    console.log(user._id);
-console.log(req.user._id);
-    if(user._id==req.user._id || admin){
-        console.log(user._id);
+    if(admin._id==req.user._id){
+        
         if(password){
-            user.password=password
+            admin.password=password
         }
-        if(name){
-            user.name=name;
+        if(username){
+            admin.username=username;
         }
-        if(phone){
-          const duplicate=await User.findOne({phone:phone}).lean()
-          if(duplicate)
-            return res.status(409).json({message:"duplicate phone"})
-          user.phone=phone;
-        }
+        
         if(email)
         {
-            user.email=email;
+            admin.email=email;
         }
         
     
-        const MyUpdateUser=await user.save()
+        const MyUpdateUser=await admin.save()
         return res.status(201).json({success:true,
-            message:`user ${user.name}updated successfuly`,
+            message:`admin ${admin.email} updated successfuly`,
             })
     }
 
-return res.status(405).json({message:"unaouthorised"})
+return res.status(401).json({message:"unaouthorised"})
 
 }
+
+
+
+
+
+
+
 
 const deleteUser=async(req,res)=>{
   const {_id}=req.params
   const user=await User.findById(_id).exec()
-  const admin=await Admin.findById({_id:req.user._id})
-
 if(!user){
   return res.status(401).json({message:"not found"})
 
   }
-  if(user._id==req.user._id || admin){
+  if(user._id==req.user._id){
       await user.deleteOne()
       return res.status(201).json({success:true,
           message:`one user deleted successfuly`

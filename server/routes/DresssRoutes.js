@@ -6,8 +6,8 @@ const verifyJWT = require("../middleware/verifyJWT")
 router.use(verifyJWT)
 router.get("/", DressController.getDresses)
 router.post("/", DressController.createDress)
-router.put("/:id", DressController.updateDress)
-router.delete("/:id", DressController.deleteDress)
-router.get("/:id", DressController.getDressById)
+router.put("/:_id", DressController.updateDress)
+router.delete("/:_id", DressController.deleteDress)
+router.get("/:_id", DressController.getDressById)
 
 module.exports = router

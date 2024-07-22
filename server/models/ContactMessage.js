@@ -14,9 +14,11 @@ const contactMessageSchema = new Schema({
         type: String, 
         required: true 
   },
-  date: { 
-        type: Date, 
-        default: Date.now }
-});
+ 
+},
+    
+{
+    timestamps:true
+    });
 
 module.exports = mongoose.model('ContactMessage', contactMessageSchema);
