@@ -7,6 +7,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Register from './components/Register';
 import DressComponent from "./components/DressComponent"
+import Navbar from "./components/Navbar"
+import ContactForm from "./components/ContactForm"
 
 function App() {
 
@@ -14,12 +16,12 @@ function App() {
 
     <Provider store={store}>
       <BrowserRouter>
-
+        <Navbar />
         <Routes>
           <Route path='/register' element={<Register />} />
           <Route path='/catalog' element={<Catalog />} />
           <Route path='/dressComponent' element={<DressComponent />} />
-
+          <Route path='/contactForm' element={<ContactForm />} />
         </Routes>
       </BrowserRouter>
     </Provider>
