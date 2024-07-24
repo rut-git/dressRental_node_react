@@ -9,6 +9,7 @@ import Register from './components/Register';
 import DressComponent from "./components/DressComponent"
 import Navbar from "./components/Navbar"
 import ContactForm from "./components/ContactForm"
+import JewCalendar from "./components/JewCalender"
 
 function App() {
 
