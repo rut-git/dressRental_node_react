@@ -154,6 +154,7 @@ import d1 from "./images/dress1.png"
 import d2 from "./images/dress2.png"
 import d3 from "./images/dress3.jpg"
 import d4 from "./images/dress4.png"
+import { useNavigate } from "react-router-dom";
 
 const ProductService = {
     getProducts: () => {
@@ -171,6 +172,7 @@ export default function BasicDemo() {
     const [layout, setLayout] = useState('grid');
     const [searchTerm, setSearchTerm] = useState('');
     const [filterColor, setFilterColor] = useState('');
+    const navigate=useNavigate()
 
     useEffect(() => {
         ProductService.getProducts().then((data) => setProducts(data.slice(0, 12)));
@@ -196,7 +198,9 @@ export default function BasicDemo() {
                 return null;
         }
     };
-
+    const choose=()=>{
+        navigate("./choose")
+    }
     const listItem = (product, index) => {
         return (
             <div className="col-12" key={product.id}>
@@ -227,7 +231,7 @@ export default function BasicDemo() {
                     </div>
                     <div className="flex align-items-center justify-content-between">
                         {/* <span className="text-2xl font-semibold">${product.price}</span> */}
-                        <Button label="לפרטים" className="p-button-info" style={{width:'510px'}}/>
+                        <Button label="לפרטים" className="p-button-info" style={{width:'510px'}} onClick={choose}/>
                         <br/><br/>
                     </div>
                 </div>

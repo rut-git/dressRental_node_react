@@ -10,6 +10,7 @@ import DressComponent from "./components/DressComponent"
 import Navbar from "./components/Navbar"
 import ContactForm from "./components/ContactForm"
 import JewCalendar from "./components/JewCalender"
+import Choose from "./components/ChooseDress"
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/catalog' element={<Catalog />} />
           <Route path='/dressComponent' element={<DressComponent />} />
           <Route path='/contactForm' element={<ContactForm />} />
+          <Route path='/catalog/choose' element={<Choose />} />
         </Routes>
       </BrowserRouter>
     </Provider>
